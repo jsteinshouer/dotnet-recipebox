@@ -25,3 +25,9 @@ Apply EF to the project
 ```
 dotnet ef migrations add InitialCreate --context RecipeContext
 ```
+
+6. Apply migration
+
+```
+dotnet ef database update --context RecipeContext
+```
