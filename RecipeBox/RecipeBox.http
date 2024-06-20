@@ -1,0 +1,22 @@
+@RecipeBox_HostAddress = http://0.0.0.0:5073
+
+###
+
+GET {{RecipeBox_HostAddress}}/recipes/
+Accept: application/json
+
+###
+
+GET {{RecipeBox_HostAddress}}/recipes/1
+Accept: application/json
+
+###
+
+POST {{RecipeBox_HostAddress}}/recipes/
+Content-Type: application/json
+
+{
+    "name": "Buffalo Chicken Pizza",
+    "ingredients": "Mozzerella\nPizza crust\n\nBuffalo sauce\nChicken",
+    "directions": "Put ingredients on pizza crust and bake at 400 degrees for 10 minutes."
+}

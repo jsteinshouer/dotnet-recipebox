@@ -3,7 +3,7 @@
 
 A simple recipe application using .net core.
 
-### Scaffold preoject
+### Scaffold project
 
 ```
 dotnet new web -o RecipeBox -f net8.0
@@ -16,7 +16,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet tool install --global dotnet-ef
 ```
 
-Apply EF to the project
+### Apply EF to the project
 
 1. Add a folder named `data`
 2. Create `Models/Recipe.cs`
