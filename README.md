@@ -3,11 +3,13 @@
 
 A simple recipe application using .net core.
 
+### Scaffold preoject
+
 ```
 dotnet new web -o RecipeBox -f net8.0
 ```
 
-Setup EF
+### Setup EF
 ```
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
@@ -31,3 +33,18 @@ dotnet ef migrations add InitialCreate --context RecipeContext
 ```
 dotnet ef database update --context RecipeContext
 ```
+
+### (Seed data)[https://learn.microsoft.com/en-us/training/modules/persist-data-ef-core/4-interacting-data#seed-the-database] and add first endpoint
+
+1. Created `RecipeBox/Models/DBInitializer.cs`
+2. Created `RecipeBox/Data/Extensions.cs`
+3. Add `app.CreateDbIfNotExists();` to `Program.cs`
+4. Add `Services/RecipeService.cs`
+5. Add `builder.Services.AddScoped<RecipeService>();` to `Program.cs`
+6. Add a reference to `RecipeService` in `Program.cs`
+
+```
+var recipeService = app.Services.CreateScope().ServiceProvider.GetRequiredService<RecipeService>();
+```
+
+4. Run `dotnet run`
