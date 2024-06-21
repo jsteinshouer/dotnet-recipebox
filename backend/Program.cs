@@ -15,8 +15,8 @@ app.CreateDbIfNotExists();
 var recipeService = app.Services.CreateScope().ServiceProvider.GetRequiredService<RecipeService>();
 
 app.MapGet("/", () => "Hello World!");
-app.MapGet("/recipes/{id}", (int id) => recipeService.GetById(id));
-app.MapGet("/recipes", () => recipeService.GetAll());
-app.MapPost("/recipes", (Recipe recipe) => recipeService.Create(recipe));
+app.MapGet("/api/recipes/{id}", (int id) => recipeService.GetById(id));
+app.MapGet("/api/recipes", () => recipeService.GetAll());
+app.MapPost("/api/recipes", (Recipe recipe) => recipeService.Create(recipe));
 
 app.Run();

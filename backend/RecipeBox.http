@@ -1,18 +1,18 @@
-@RecipeBox_HostAddress = http://0.0.0.0:5073
+@RecipeBox_BaseURL = http://0.0.0.0:5073/api
 
 ###
 
-GET {{RecipeBox_HostAddress}}/recipes/
+GET {{RecipeBox_BaseURL}}/recipes/
 Accept: application/json
 
 ###
 
-GET {{RecipeBox_HostAddress}}/recipes/1
+GET {{RecipeBox_BaseURL}}/recipes/1
 Accept: application/json
 
 ###
 
-POST {{RecipeBox_HostAddress}}/recipes/
+POST {{RecipeBox_BaseURL}}/recipes/
 Content-Type: application/json
 
 {
