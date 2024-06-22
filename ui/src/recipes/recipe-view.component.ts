@@ -1,43 +1,49 @@
 import {Component} from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {Recipe} from './recipe';
 
 
 @Component({
-  selector: 'recipe-list',
+  selector: 'recipe-view',
   template: `
-    <h2>Recipes</h2>
-    <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Ingredients</th>
-        <th scope="col">Directions</th>
-      </tr>
-    </thead>
-    <tbody>
-    @for ( recipe of recipes; track $index ) {
-      <tr>
-        <td>{{ recipe.name }}</td>
-        <td class="text-truncate" style="max-width: 200px;">{{ recipe.ingredients }}</td>
-        <td class="text-truncate" style="max-width: 200px;">{{ recipe.directions }}</td>
-    }
-    </tbody>
-    </table>
+  <div class="container" style="margin-top: 30px">
+    <h1>{{recipe.name}}</h1>
+    <div>
+      <h5><strong>Ingredients</strong></h5>
+      <pre>{{recipe.ingredients}}</pre>
+    </div>
+    <div>
+      <h5><strong>Directions</strong></h5>
+      <pre>{{recipe.directions}}</pre>
+    </div>
+    <!-- <a class="btn btn-default btn-lg" href="#">Edit</a>-->
+  </div>
   `,
   standalone: true,
 })
-export class RecipeListComponent {
-  recipes: Recipe[] = [];
+export class RecipeView {
+  recipe: Recipe = {
+    id: 0,
+    name: "",
+    ingredients: "",
+    directions: ""
+  };
 
-    constructor() {
-      this.getRecipes().then((recipeData: Recipe[]) => {
-        this.recipes = recipeData;
+  constructor(private route: ActivatedRoute) {
+      console.log(this.route)
+    this.getRecipe( route.snapshot.paramMap.get('id') ).then((recipe: Recipe) => {
+        this.recipe = recipe;
       });
     }
 
-    async getRecipes(): Promise<Recipe[]> {
-        const response = await fetch("/api/recipes");
-        return (await response.json()) ?? [];
+    async getRecipe( id: string | null): Promise<Recipe> {
+      const response = await fetch(`/api/recipes/${id}`);
+      return (await response.json()) ?? {
+        id: 0,
+        name: "",
+        ingredients: "",
+        directions: ""
+      };
     }
 
 }

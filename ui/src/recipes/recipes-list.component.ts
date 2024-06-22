@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import {Recipe} from './recipe';
 
 
 @Component({
   selector: 'recipe-list',
+  imports: [RouterLink, RouterLinkActive],
   template: `
     <h2>Recipes</h2>
     <table class="table">
@@ -15,9 +17,9 @@ import {Recipe} from './recipe';
       </tr>
     </thead>
     <tbody>
-    @for ( recipe of recipes; track $index ) {
+    @for ( recipe of recipes; track recipe.id ) {
       <tr>
-        <td>{{ recipe.name }}</td>
+        <td><a routerLink="/recipes/{{recipe.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">{{ recipe.name }}</a></td>
         <td class="text-truncate" style="max-width: 200px;">{{ recipe.ingredients }}</td>
         <td class="text-truncate" style="max-width: 200px;">{{ recipe.directions }}</td>
     }

@@ -10,7 +10,6 @@ import { NavComponent } from './nav.component';
   template: `
     <nav-bar />
     <div class="container" style="margin-top: 50px">
-      <recipe-list />
       <router-outlet />
     </div>`,
   styles: [],
