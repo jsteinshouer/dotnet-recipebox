@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RecipeListComponent } from '../recipes/recipes-list.component';
+import { NavComponent } from './nav.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,RecipeListComponent],
+  imports: [RouterOutlet,RecipeListComponent,NavComponent],
   template: `
-    <h1>Welcome to {{title}}!</h1>
-    <recipe-list />
-    <router-outlet />
-  `,
+    <nav-bar />
+    <div class="container" style="margin-top: 50px">
+      <router-outlet />
+    </div>`,
   styles: [],
 })
 export class AppComponent {
