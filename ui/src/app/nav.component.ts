@@ -14,9 +14,10 @@ import { Component } from '@angular/core';
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Recipes
-            <span class="visually-hidden">(current)</span>
-          </a>
+          <a class="nav-link active" href="/">Recipes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/recipes/new">New</a>
         </li>
       </ul>
       <form class="d-flex">
