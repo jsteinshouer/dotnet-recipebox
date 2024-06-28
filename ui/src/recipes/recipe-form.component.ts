@@ -72,7 +72,14 @@ export class RecipeForm {
       });
     }
     else {
-      console.log("update recipe");
+      this.updateRecipe(this.recipe).then((success: Boolean) => {
+        if (success) {
+          this.submitted = false;
+        }
+        else {
+          alert("Update failed!")
+        }
+      });
     }
 
   }
@@ -94,6 +101,15 @@ export class RecipeForm {
       body: JSON.stringify( recipe )
     });
     return (await response.json());
+  }
+
+  async updateRecipe(recipe: Recipe): Promise<Boolean> {
+    const response = await fetch(`/api/recipes/${recipe.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify( recipe )
+    });
+    return (response.status == 204);
   }
 
 }
