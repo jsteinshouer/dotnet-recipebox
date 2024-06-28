@@ -39,4 +39,16 @@ public class RecipeService
         return newRecipe;
     }
 
+	public void Update(Recipe updateRecipe)
+	{
+		var recipe = _context.Recipes.Find(updateRecipe.Id);
+		if (recipe is null)
+			throw new InvalidOperationException("Recipe does not exist");
+
+		recipe.Name = updateRecipe.Name;
+		recipe.Directions = updateRecipe.Directions;
+		recipe.Ingredients = updateRecipe.Ingredients;
+
+		_context.SaveChanges();
+	}
 }

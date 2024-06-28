@@ -20,3 +20,14 @@ Content-Type: application/json
     "ingredients": "Mozzerella\nPizza crust\n\nBuffalo sauce\nChicken",
     "directions": "Put ingredients on pizza crust and bake at 400 degrees for 10 minutes."
 }
+
+###
+
+PUT {{RecipeBox_BaseURL}}/recipes/5
+Content-Type: application/json
+
+{
+    "name": "Buffalo Chicken Pizza",
+    "ingredients": "Mozzerella\nPizza crust\n\nBuffalo sauce\nChicken",
+    "directions": "Put ingredients on pizza crust and bake at 400 degrees for 10 minutes."
+}
