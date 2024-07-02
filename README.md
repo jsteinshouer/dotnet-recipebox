@@ -34,7 +34,7 @@ dotnet ef migrations add InitialCreate --context RecipeContext
 dotnet ef database update --context RecipeContext
 ```
 
-### (Seed data)[https://learn.microsoft.com/en-us/training/modules/persist-data-ef-core/4-interacting-data#seed-the-database] and add first endpoint
+### [Seed data](https://learn.microsoft.com/en-us/training/modules/persist-data-ef-core/4-interacting-data#seed-the-database) and add first endpoint
 
 1. Created `RecipeBox/Models/DBInitializer.cs`
 2. Created `RecipeBox/Data/Extensions.cs`
@@ -48,3 +48,19 @@ var recipeService = app.Services.CreateScope().ServiceProvider.GetRequiredServic
 ```
 
 4. Run `dotnet run`
+
+### Indentity Framework - https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-8.0#install-nuget-packages
+
+```
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+```
+
+- Created new ApplicationDbContext.cs
+- Removed RecipeContext and updated references
+- Updated Program.cs with new ApplicationDbContext
+- Deleted existing database and migrations and created new ones
+
+```
+dotnet ef migrations add InitialMigration
+dotnet ef database update
+ ```

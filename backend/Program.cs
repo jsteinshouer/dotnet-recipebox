@@ -1,6 +1,7 @@
 using RecipeBox.Data;
 using RecipeBox.Models;
 using RecipeBox.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -9,9 +10,12 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 	WebRootPath = "Public"
 });
 
-// Add the RecipeContext
-builder.Services.AddSqlite<RecipeContext>("Data Source=RecipeBox.db");
+var connectionString = "Data Source=RecipeBox.db";
+builder.Services.AddSqlite<ApplicationDbContext>(connectionString);
 builder.Services.AddScoped<RecipeService>();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 
@@ -22,10 +26,12 @@ var recipeService = app.Services.CreateScope().ServiceProvider.GetRequiredServic
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.MapGroup("/api").MapIdentityApi<IdentityUser>();
+
 // app.MapGet("/", () => "Hello World!");
 app.MapGet("/api/recipes/{id}", (int id) => recipeService.GetById(id));
 app.MapGet("/api/recipes", () => recipeService.GetAll());
-app.MapPost("/api/recipes", (Recipe recipe) => recipeService.Create(recipe));
+app.MapPost("/api/recipes", (Recipe recipe) => recipeService.Create(recipe)).RequireAuthorization();
 app.MapPut("/api/recipes/{id}", async (Recipe updateRecipe, int Id) =>
 {
     var recipe = recipeService.GetById(Id);
@@ -33,6 +39,6 @@ app.MapPut("/api/recipes/{id}", async (Recipe updateRecipe, int Id) =>
 	updateRecipe.Id = Id;
 	recipeService.Update(updateRecipe);
     return Results.NoContent();
-});
+}).RequireAuthorization();
 
 app.Run();

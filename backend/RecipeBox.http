@@ -12,7 +12,30 @@ Accept: application/json
 
 ###
 
+POST {{RecipeBox_BaseURL}}/register/
+Content-Type: application/json
+
+{
+  "email": "me@example.com",
+  "password": "P@ssword1"
+}
+
+###
+
+
+# @name loginRequest
+POST {{RecipeBox_BaseURL}}/login/
+Content-Type: application/json
+
+{
+  "email": "me@example.com",
+  "password": "P@ssword1"
+}
+
+###
+
 POST {{RecipeBox_BaseURL}}/recipes/
+Authorization: Bearer {{loginRequest.response.body.accessToken}}
 Content-Type: application/json
 
 {

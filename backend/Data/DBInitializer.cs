@@ -4,7 +4,7 @@ namespace RecipeBox.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(RecipeContext context)
+        public static void Initialize(ApplicationDbContext context)
         {
 
             if ( context.Recipes.Any() )

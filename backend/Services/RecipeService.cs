@@ -8,11 +8,11 @@ namespace RecipeBox.Services;
 
 public class RecipeService
 {
-    private readonly RecipeContext _context;
+    private readonly ApplicationDbContext _context;
 
 
     //injected via dependency injection from Program.cs
-    public RecipeService(RecipeContext context)
+    public RecipeService(ApplicationDbContext context)
     {
         _context = context;
     }
