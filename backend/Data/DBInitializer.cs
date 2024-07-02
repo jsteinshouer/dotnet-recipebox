@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using RecipeBox.Models;
 
 namespace RecipeBox.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(ApplicationDbContext context)
+        public static void Initialize(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+
+
         {
 
             if ( context.Recipes.Any() )
@@ -12,7 +16,15 @@ namespace RecipeBox.Data
                 return;   // DB has been seeded
             }
 
-            var recipes = new Recipe[]
+			ApplicationUser user = new ApplicationUser()
+			{
+				  UserName = "me@example.com",
+				  Email = "me@example.com",
+			};
+
+			var result = userManager.CreateAsync(user, "P@ssword1");
+
+			var recipes = new Recipe[]
             {
                 new Recipe
                     { 

@@ -1,4 +1,7 @@
 namespace RecipeBox.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using RecipeBox.Models;
 
 public static class Extensions
 {
@@ -9,8 +12,9 @@ public static class Extensions
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDbContext>();
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                 context.Database.EnsureCreated();
-                DbInitializer.Initialize(context);
+                DbInitializer.Initialize(context, userManager);
             }
         }
     }
