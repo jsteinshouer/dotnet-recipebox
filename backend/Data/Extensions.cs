@@ -12,7 +12,7 @@ public static class Extensions
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDbContext>();
-                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 context.Database.EnsureCreated();
                 DbInitializer.Initialize(context, userManager);
             }

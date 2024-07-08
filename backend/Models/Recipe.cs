@@ -15,4 +15,7 @@ public class Recipe
 
     [Required]
     public string? Directions { get; set; }
+
+    [Required]
+    public string? ApplicationUserId { get; set; }
 }

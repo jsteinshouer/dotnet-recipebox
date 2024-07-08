@@ -6,7 +6,7 @@ namespace RecipeBox.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
 
 
         {
@@ -46,7 +46,9 @@ namespace RecipeBox.Data
                     }
             };
 
-            context.Recipes.AddRange(recipes);
+			user.Recipes = recipes;
+
+            // context.Recipes.AddRange(recipes);
             context.SaveChanges();
         }
     }
