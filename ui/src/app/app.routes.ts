@@ -5,6 +5,7 @@ import { RecipeForm } from '../recipes/recipe-form.component';
 import { RecipeListComponent } from '../recipes/recipes-list.component';
 import { AuthService } from './auth.service';
 import { SigninForm } from './sign-in.component';
+import { SignupForm } from './sign-up.component';
 
 let isLoggedIn: boolean = false;
 
@@ -23,6 +24,7 @@ const authGuard: CanActivateFn = (
 
 export const routes: Routes = [
   { path: 'login', component: SigninForm },
+  { path: 'signup', component: SignupForm },
   { path: 'recipes/edit/:id', component: RecipeForm, canActivate: [authGuard] },
   { path: 'recipes/new', component: RecipeForm, canActivate: [authGuard] },
   { path: 'recipes/:id', component: RecipeView, canActivate: [authGuard] },

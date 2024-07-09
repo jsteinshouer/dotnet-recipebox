@@ -29,6 +29,16 @@ import { NgIf } from '@angular/common'
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
+    <div class="collapse navbar-collapse justify-content-end"  id="navbarColor02" *ngIf="!authService.isLoggedIn">
+      <ul class="navbar-nav nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/signup" routerLinkActive="active">Sign-up</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
   `,

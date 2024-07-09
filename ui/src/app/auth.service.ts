@@ -1,11 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  router: Router = inject(Router);
   isLoggedIn: boolean = false;
   token: string = "";
   refreshToken = "";
@@ -28,9 +26,28 @@ export class AuthService {
       this.isLoggedIn = true;
       this.token = responseData.accessToken;
       this.refreshToken = responseData.refreshToken;
-      this.router.navigateByUrl("/");
+      return true;
     }
+
+    return false;
     // console.log(response);
+  }
+
+  async register(email: string, password: string) {
+    const response = await fetch("/api/register", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "email": email,
+        "password": password
+      })
+    });
+
+    if ( response.ok ) {
+      return true;
+    }
+    return false;
+
   }
 
 }
