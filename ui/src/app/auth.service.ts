@@ -6,6 +6,7 @@ import { Injectable, inject } from '@angular/core';
 export class AuthService {
   isLoggedIn: boolean = false;
   token: string = "";
+  tokenExiration: Date = new Date();
   refreshToken = "";
 
   constructor() {
@@ -24,6 +25,7 @@ export class AuthService {
     if ( response.ok ) {
       const responseData = await response.json();
       this.isLoggedIn = true;
+      this.tokenExiration = new Date(new Date().getTime() + responseData.expiresIn * 1000);
       this.token = responseData.accessToken;
       this.refreshToken = responseData.refreshToken;
       return true;
