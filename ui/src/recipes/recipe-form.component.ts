@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
-import {Recipe} from './recipe';
+import { Recipe } from './recipe';
+import { RecipeService } from './recipe.service';
 
 //TODO: Learn the Angular way of form validation - https://angular.dev/guide/forms/template-driven-forms
 @Component({
@@ -37,6 +38,7 @@ import {Recipe} from './recipe';
   standalone: true,
 })
 export class RecipeForm {
+  recipeService: RecipeService = inject(RecipeService);
 
   submitted = false;
   validationFailed = false;
@@ -50,7 +52,7 @@ export class RecipeForm {
   constructor(private route: ActivatedRoute) {
 
     if (route.snapshot.paramMap.get('id') ) {
-      this.getRecipe( route.snapshot.paramMap.get('id') ).then((recipe: Recipe) => {
+      this.recipeService.getRecipe( route.snapshot.paramMap.get('id') ).then((recipe: Recipe) => {
         this.recipe = recipe;
       });
     }
@@ -66,13 +68,13 @@ export class RecipeForm {
     }
 
     if ( this.recipe.id == 0 ) {
-      this.createRecipe(this.recipe).then((recipe: Recipe) => {
+      this.recipeService.createRecipe(this.recipe).then((recipe: Recipe) => {
         this.recipe = recipe;
         this.submitted = false;
       });
     }
     else {
-      this.updateRecipe(this.recipe).then((success: Boolean) => {
+      this.recipeService.updateRecipe(this.recipe).then((success: Boolean) => {
         if (success) {
           this.submitted = false;
         }
@@ -82,34 +84,6 @@ export class RecipeForm {
       });
     }
 
-  }
-
-  async getRecipe( id: string | null): Promise<Recipe> {
-    const response = await fetch(`/api/recipes/${id}`);
-    return (await response.json()) ?? {
-      id: 0,
-      name: "",
-      ingredients: "",
-      directions: ""
-    };
-  }
-
-  async createRecipe(recipe: Recipe): Promise<Recipe> {
-    const response = await fetch("/api/recipes", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( recipe )
-    });
-    return (await response.json());
-  }
-
-  async updateRecipe(recipe: Recipe): Promise<Boolean> {
-    const response = await fetch(`/api/recipes/${recipe.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( recipe )
-    });
-    return (response.status == 204);
   }
 
 }

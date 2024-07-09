@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from './auth.service';
+import { NgIf } from '@angular/common'
 
 @Component({
   selector: 'nav-bar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NgIf],
   template: `
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
@@ -12,7 +14,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarColor02">
+
+    <div class="collapse navbar-collapse" id="navbarColor02" *ngIf="authService.isLoggedIn">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link active" routerLink="/" routerLinkActive="active">Recipes</a>
@@ -32,5 +35,5 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styles: [],
 })
 export class NavComponent {
-
+  authService = inject(AuthService);
 }

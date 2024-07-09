@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {SlicePipe} from '@angular/common';
+import { Component,inject } from '@angular/core';
+import { SlicePipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import {Recipe} from './recipe';
+import { Recipe } from './recipe';
+import { RecipeService } from './recipe.service';
 
 
 @Component({
@@ -32,16 +33,12 @@ import {Recipe} from './recipe';
 })
 export class RecipeListComponent {
   recipes: Recipe[] = [];
+  recipeService: RecipeService = inject(RecipeService);
 
     constructor() {
-      this.getRecipes().then((recipeData: Recipe[]) => {
+      this.recipeService.getRecipes().then((recipeData: Recipe[]) => {
         this.recipes = recipeData;
       });
-    }
-
-    async getRecipes(): Promise<Recipe[]> {
-        const response = await fetch("/api/recipes");
-        return (await response.json()) ?? [];
     }
 
 }

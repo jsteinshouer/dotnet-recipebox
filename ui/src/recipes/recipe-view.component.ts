@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import {Recipe} from './recipe';
+import { Recipe } from './recipe';
+import { RecipeService } from './recipe.service';
 
 
 @Component({
@@ -38,6 +39,8 @@ import {Recipe} from './recipe';
   standalone: true,
 })
 export class RecipeView {
+  recipeService: RecipeService = inject(RecipeService);
+
   recipe: Recipe = {
     id: 0,
     name: "",
@@ -46,19 +49,9 @@ export class RecipeView {
   };
 
   constructor(private route: ActivatedRoute) {
-    this.getRecipe( route.snapshot.paramMap.get('id') ).then((recipe: Recipe) => {
+    this.recipeService.getRecipe( route.snapshot.paramMap.get('id') ).then((recipe: Recipe) => {
         this.recipe = recipe;
-      });
-    }
-
-    async getRecipe( id: string | null): Promise<Recipe> {
-      const response = await fetch(`/api/recipes/${id}`);
-      return (await response.json()) ?? {
-        id: 0,
-        name: "",
-        ingredients: "",
-        directions: ""
-      };
-    }
+    });
+  }
 
 }
