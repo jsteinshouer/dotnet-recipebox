@@ -59,7 +59,7 @@ app.MapPost("/api/recipes", (HttpContext context, Recipe recipe) =>
 {
 	var user = userService.GetByUsername(context.User.Identity.Name);
 	recipe.ApplicationUserId = user.Id;
-	recipeService.Create(recipe);
+	return recipeService.Create(recipe);
 }).RequireAuthorization();
 
 app.MapPut("/api/recipes/{id}", async (HttpContext context, Recipe updateRecipe, int Id) =>
