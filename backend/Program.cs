@@ -22,17 +22,13 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
 var app = builder.Build();
 
 app.CreateDbIfNotExists();
-
-var recipeService = app.Services.CreateScope().ServiceProvider.GetRequiredService<RecipeService>();
-var userService = app.Services.CreateScope().ServiceProvider.GetRequiredService<UserService>();
-
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.MapGroup("/api").MapIdentityApi<ApplicationUser>();
 
 // app.MapGet("/", () => "Hello World!");
-app.MapGet("/api/me", (HttpContext context) => 
+app.MapGet("/api/me", (HttpContext context, UserService userService) => 
 {
 	var user = userService.GetByUsername(context.User.Identity.Name);
 	return Results.Ok(new{
@@ -42,7 +38,7 @@ app.MapGet("/api/me", (HttpContext context) =>
 	});
 }).RequireAuthorization();
 
-app.MapGet("/api/recipes/{id}", async (HttpContext context, int Id) => 
+app.MapGet("/api/recipes/{id}", async (HttpContext context, int Id, UserService userService, RecipeService recipeService) => 
 {
 	var user = userService.GetByUsername(context.User.Identity.Name);
 	var recipe = recipeService.GetById(Id);
@@ -50,19 +46,19 @@ app.MapGet("/api/recipes/{id}", async (HttpContext context, int Id) =>
 	return Results.Ok(recipe);
 }).RequireAuthorization();
 
-app.MapGet("/api/recipes", (HttpContext context) => 
+app.MapGet("/api/recipes", (HttpContext context, UserService userService) => 
 {
 	return userService.GetByUsername(context.User.Identity.Name).Recipes;
 }).RequireAuthorization();
 
-app.MapPost("/api/recipes", (HttpContext context, Recipe recipe) => 
+app.MapPost("/api/recipes", (HttpContext context, Recipe recipe, UserService userService, RecipeService recipeService) => 
 {
 	var user = userService.GetByUsername(context.User.Identity.Name);
 	recipe.ApplicationUserId = user.Id;
 	return recipeService.Create(recipe);
 }).RequireAuthorization();
 
-app.MapPut("/api/recipes/{id}", async (HttpContext context, Recipe updateRecipe, int Id) =>
+app.MapPut("/api/recipes/{id}", async (HttpContext context, Recipe updateRecipe, int Id, UserService userService, RecipeService recipeService) =>
 {
 	var user = userService.GetByUsername(context.User.Identity.Name);
 	var recipe = recipeService.GetById(Id);
