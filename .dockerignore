@@ -1,0 +1,12 @@
+node_modules
+ui/node_modules
+ui/.angular
+.vscode
+ui/dist
+.env
+*.md
+*.db
+*.http
+backend/obj
+backend/bin
+backend/Data/*.json
