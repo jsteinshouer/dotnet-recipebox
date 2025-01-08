@@ -35,7 +35,7 @@ import { NgIf } from '@angular/common'
           <a class="nav-link active" routerLink="/login" routerLinkActive="active">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" routerLink="/signup" routerLinkActive="active">Sign-up</a>
+          <!-- <a class="nav-link active" routerLink="/signup" routerLinkActive="active">Sign-up</a> -->
         </li>
       </ul>
     </div>
