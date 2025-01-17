@@ -72,7 +72,7 @@ export class RecipeListComponent {
 
     searchRecipes( query: string ) {
       if ( query.length ) {
-        this.filteredRecipes = this.recipes.filter( (item) => String(item.name).toLowerCase().indexOf(query) > -1 );
+        this.filteredRecipes = this.recipes.filter( (item) => String(item.name).toLowerCase().indexOf(query.toLowerCase()) > -1 );
         this.filterCount = this.filteredRecipes.length;
       }
       else {
