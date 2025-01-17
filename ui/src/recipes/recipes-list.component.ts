@@ -1,6 +1,6 @@
 import { Component,inject } from '@angular/core';
 import { SlicePipe } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive,ActivatedRoute } from '@angular/router';
 import { Recipe } from './recipe';
 import { RecipeService } from './recipe.service';
 
@@ -44,6 +44,7 @@ import { RecipeService } from './recipe.service';
   standalone: true,
 })
 export class RecipeListComponent {
+  searchQuery: string = "";
   recipes: Recipe[] = [];
   filteredRecipes: Recipe[] = [];
   index = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
@@ -51,10 +52,16 @@ export class RecipeListComponent {
   filterCount: number = 0;
   recipeService: RecipeService = inject(RecipeService);
 
-    constructor() {
+    constructor(private route: ActivatedRoute) {
+      //Subscribe to query param changes
       this.recipeService.getRecipes().then((recipeData: Recipe[]) => {
         this.recipes = recipeData.sort((a, b) => a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1 );
         this.showAll();
+
+        route.queryParams.subscribe(p => {
+          this.searchQuery = p['q'] || "";
+          this.searchRecipes(this.searchQuery);
+        });
       });
     }
 
@@ -62,6 +69,17 @@ export class RecipeListComponent {
       this.filteredRecipes = this.recipes.filter( (item) => Array.from( item.name )[0].toUpperCase() == letter );
       this.filterCount = this.filteredRecipes.length;
     }
+
+    searchRecipes( query: string ) {
+      if ( query.length ) {
+        this.filteredRecipes = this.recipes.filter( (item) => String(item.name).toLowerCase().indexOf(query) > -1 );
+        this.filterCount = this.filteredRecipes.length;
+      }
+      else {
+        this.showAll();
+      }
+    }
+
     showAll() {
       this.filteredRecipes = this.recipes;
       this.filterCount = this.recipes.length;
