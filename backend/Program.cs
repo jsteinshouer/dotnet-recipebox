@@ -23,6 +23,22 @@ var app = builder.Build();
 
 app.CreateDbIfNotExists();
 app.UseDefaultFiles();
+
+app.Use(async (context, next) =>
+{
+	var url = context.Request.Path.Value;
+	// Rewrite to index
+	if (url != "/" 	&& 
+		!url.StartsWith("/api") && 
+		!System.IO.Path.HasExtension(url))
+	{
+		// rewrite and continue processing
+		context.Request.Path = "/index.html";
+	}
+
+	await next();
+});
+
 app.UseStaticFiles();
 
 app.MapGroup("/api").MapIdentityApi<ApplicationUser>();
