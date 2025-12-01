@@ -34,6 +34,7 @@ import { RecipeService } from './recipe.service';
       background-color: #f5f5f5;
       border: 1px solid #ccc;
       border-radius: 0;
+      white-space: pre-wrap;
     }
   `,
   standalone: true,

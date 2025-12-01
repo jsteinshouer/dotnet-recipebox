@@ -4,7 +4,8 @@
     "features": {
         "ghcr.io/warrenbuckley/codespace-features/sqlite:latest": {},
         "ghcr.io/devcontainers/features/node:1": {},
-        "ghcr.io/devcontainers-contrib/features/angular-cli:2": {}
+        "ghcr.io/devcontainers-contrib/features/angular-cli:2": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
         "vscode": {

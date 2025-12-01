@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { NgIf } from '@angular/common'
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'nav-bar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgIf],
+  imports: [RouterLink, RouterLinkActive, NgIf, FormsModule],
   template: `
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
@@ -25,8 +26,8 @@ import { NgIf } from '@angular/common'
         </li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-sm-2" type="search" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control me-sm-2" type="search" placeholder="Search" name="searchTerm" [(ngModel)]="searchTerm">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click)="search()">Search</button>
       </form>
     </div>
     <div class="collapse navbar-collapse justify-content-end"  id="navbarColor02" *ngIf="!authService.isLoggedIn">
@@ -45,5 +46,11 @@ import { NgIf } from '@angular/common'
   styles: [],
 })
 export class NavComponent {
+  searchTerm = "";
   authService = inject(AuthService);
+  private router = inject(Router);
+
+  search() {
+    this.router.navigateByUrl(`/?q=${this.searchTerm}`);
+  }
 }
